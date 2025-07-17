@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 
 export default function Footer2() {
-  // Chatbot logic (from your provided component)
   const getDefaultBotMessage = () => ({
     from: "bot",
     text: "Hi! I'm your AI Assistant 🤖. How can I help you today?",
