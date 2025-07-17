@@ -1,13 +1,8 @@
 import FAQ from '../models/faqModel.js';
 import stringSimilarity from 'string-similarity';
-import dotenv from 'dotenv';
-import OpenAI from 'openai';
 
-dotenv.config();
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+
 
 export const askFAQ = async (req, res) => {
   const { message } = req.body;
