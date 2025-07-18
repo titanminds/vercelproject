@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 
+const backendURL = 'https://vercelproject-production.up.railway.app/api';
+
 export default function Footer2() {
   const getDefaultBotMessage = () => ({
     from: "bot",
@@ -70,10 +72,10 @@ export default function Footer2() {
     setSuggestions([]);
 
     try {
-      const res = await fetch("http://localhost:8000/api/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
+      const response = await fetch(`${backendURL}/ask`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: userInput }),
       });
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
