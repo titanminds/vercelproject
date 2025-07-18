@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 
-const backendURL = 'https://vercelproject-production.up.railway.app/api';
-
 export default function Footer2() {
   const getDefaultBotMessage = () => ({
     from: "bot",
@@ -72,21 +70,21 @@ export default function Footer2() {
     setSuggestions([]);
 
     try {
-      const response = await fetch(`${backendURL}/ask`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: userInput }),
+      const res = await fetch("http://localhost:8000/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
       });
-    
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    
-      const data = await response.json();
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
       const botMessage = {
         from: "bot",
         text: data.reply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-    
+
       setMessages((m) => [...m, botMessage]);
       setSuggestions(Array.isArray(data.suggestions) ? data.suggestions : []);
     } catch (err) {
@@ -100,8 +98,14 @@ export default function Footer2() {
     } finally {
       setIsTyping(false);
     }
-    
   };
+
+  const handleClear = () => {
+    setMessages([getDefaultBotMessage()]);
+    setSuggestions(starterQuestions);
+    setUserInput("");
+  };
+
   const renderMessage = (text) => {
     const urlRx = /(https?:\/\/[^\s]+)/g;
     const ytRx = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/;
