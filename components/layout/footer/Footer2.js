@@ -77,16 +77,16 @@ export default function Footer2() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userInput }),
       });
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = await res.json();
+    
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    
+      const data = await response.json();
       const botMessage = {
         from: "bot",
         text: data.reply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-
+    
       setMessages((m) => [...m, botMessage]);
       setSuggestions(Array.isArray(data.suggestions) ? data.suggestions : []);
     } catch (err) {
@@ -100,14 +100,8 @@ export default function Footer2() {
     } finally {
       setIsTyping(false);
     }
+    
   };
-
-  const handleClear = () => {
-    setMessages([getDefaultBotMessage()]);
-    setSuggestions(starterQuestions);
-    setUserInput("");
-  };
-
   const renderMessage = (text) => {
     const urlRx = /(https?:\/\/[^\s]+)/g;
     const ytRx = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/;
