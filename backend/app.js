@@ -10,11 +10,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://vercelproject-production.up.railway.app',
-  'https://your-vercel-site.vercel.app' // your actual deployed Vercel domain
-];
+
 
 app.use(cors({
   origin: 'http://localhost:3000', 
